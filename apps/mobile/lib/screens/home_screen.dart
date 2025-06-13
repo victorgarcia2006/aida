@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/widgets/header_screen.dart';
 import 'package:tabler_icons/tabler_icons.dart';
+import 'package:mobile/widgets/navbar_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -25,6 +26,7 @@ class HomeScreen extends StatelessWidget {
           )
           ),
         ),
+        bottomNavigationBar: NavbarWidget(),
       );
   }
 }
