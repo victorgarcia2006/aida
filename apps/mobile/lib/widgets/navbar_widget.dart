@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:tabler_icons/tabler_icons.dart';
 
 class NavbarWidget extends StatelessWidget {
+  final Function(int) onTabChange;
+
+  NavbarWidget({Key? key, required this.onTabChange}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -29,6 +33,14 @@ class NavbarWidget extends StatelessWidget {
           label: '',
         ),
       ],
+      onTap: (index) {
+        if (index == 1) {
+          // Si se presiona el botón de mensaje (índice 1), navega a la pantalla de chat
+          Navigator.pushNamed(context, '/chat');
+        } else {
+          onTabChange(index);
+        }
+      },
     );
   }
 }
