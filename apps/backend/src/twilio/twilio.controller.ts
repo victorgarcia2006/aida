@@ -7,19 +7,18 @@ export class TwilioController {
 
   @Post('send-message')
   async sendMessage(
-    @Body('to') to: string,
     @Body('body') body: string,
   ) {
     try {
       // Validar que los parámetros existan
-      if (!to || !body) {
+      if (!body) {
         throw new HttpException(
           'Both "to" and "body" are required',
           HttpStatus.BAD_REQUEST
         );
       }
 
-      const result = await this.twilioService.sendMessage(to, body);
+      const result = await this.twilioService.sendMessage(body);
       return {
         success: true,
         message: 'SMS sent successfully',
@@ -34,7 +33,7 @@ export class TwilioController {
     }
   }
 
-  // Endpoint de prueba más sencillo
+  /* // Endpoint de prueba más sencillo
   @Post('test')
   async testMessage() {
     try {
@@ -46,5 +45,5 @@ export class TwilioController {
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-  }
+  } */
 }
