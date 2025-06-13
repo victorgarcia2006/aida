@@ -1,0 +1,11 @@
+{
+  "build": {
+    "env": "node",
+    "command": "npm install && npm run build",
+    "cwd": "apps/backend"
+  },
+  "deploy": {
+    "command": "npm run start:prod",
+    "cwd": "apps/backend"
+  }
+}
