@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tabler_icons/tabler_icons.dart';
 import 'package:mobile/screens/home_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -25,21 +28,39 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _getBotResponse(String userMessage) async {
-    // Simulación de respuesta inteligente
-    await Future.delayed(Duration(milliseconds: 500));
-    String response;
+  final apiKey = await dotenv.env['GEMINI_API_KEY'];
+  final url = Uri.parse(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=$apiKey",
+  );
 
-    if (userMessage.contains('hola')) {
-      response = '¡Hola! ¿En qué puedo ayudarte?';
-    } else {
-      response = 'Lo siento, aún estoy aprendiendo.';
-    }
+  final headers = {"Content-Type": "application/json"};
+  final body = jsonEncode({
+    "contents": [
+      {
+        "parts": [
+          {"text": userMessage}
+        ]
+      }
+    ]
+  });
+
+  try {
+    final response = await http.post(url, headers: headers, body: body);
+    final data = jsonDecode(response.body);
+
+    final botReply =
+        data['candidates']?[0]?['content']?['parts']?[0]?['text'] ??
+            "Lo siento, no pude responder en este momento.";
 
     setState(() {
-      _messages.add({'sender': 'bot', 'text': response});
+      _messages.add({'sender': 'bot', 'text': botReply});
+    });
+  } catch (e) {
+    setState(() {
+      _messages.add({'sender': 'bot', 'text': 'Ocurrió un error: $e'});
     });
   }
-
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +83,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
             icon: Icon(TablerIcons.chevron_left, color: Colors.white),
-            onPressed:
+            onPressed: 
                 () => {
                   Navigator.pushReplacement(
                     context,
