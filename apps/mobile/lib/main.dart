@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/screens/home_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() {
-  runApp(const MyApp());
+  dotenv.load(fileName: ".env");
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  
+
   const MyApp({super.key});
 
   // This widget is the root of your application.
