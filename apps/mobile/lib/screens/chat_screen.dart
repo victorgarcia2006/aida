@@ -30,7 +30,8 @@ class _ChatScreenState extends State<ChatScreen> {
   void _getBotResponse(String userMessage) async {
   final apiKey = await dotenv.env['GEMINI_API_KEY'];
   final url = Uri.parse(
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=$apiKey",
+    //"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=$apiKey",
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$apiKey",
   );
 
   final headers = {"Content-Type": "application/json"};
