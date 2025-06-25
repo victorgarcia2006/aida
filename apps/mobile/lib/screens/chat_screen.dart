@@ -1,3 +1,4 @@
+//hardcoded-credentials Embedding credentials in source code risks unauthorized access
 import 'package:flutter/material.dart';
 import 'package:tabler_icons/tabler_icons.dart';
 import 'package:mobile/screens/home_screen.dart';
@@ -13,6 +14,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final _controller = TextEditingController();
   final List<Map<String, String>> _messages = [];
+  final String systemPrompt = "Eres Aida, una asistente virtual amigable y servicial para mujeres en situaciones de riesgo. Responde siempre de manera clara  no extiendas tus respuestas, una la mayor brevedad posible y apoyala en su situacion.";
 
   void _sendMessage() {
     final input = _controller.text;
@@ -37,6 +39,12 @@ class _ChatScreenState extends State<ChatScreen> {
   final headers = {"Content-Type": "application/json"};
   final body = jsonEncode({
     "contents": [
+      {
+        "role": "system",
+        "parts": [
+          {"text": systemPrompt}
+        ]
+      },
       {
         "parts": [
           {"text": userMessage}
