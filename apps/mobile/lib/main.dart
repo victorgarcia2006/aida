@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/screens/home_screen.dart';
-import 'package:mobile/widgets/chat_stream.dart'; // Importa la pantalla de chat
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() {
-  runApp(const MyApp());
+  dotenv.load(fileName: ".env");
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  
 
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,9 +22,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: HomeScreen(),
-      routes: {
-        '/chat': (context) => ChatScreen(), // Define la ruta para la pantalla de chat
-      },
     );
   }
 }
