@@ -8,6 +8,10 @@ export class User{
     @Prop({required: true})
     email: string;
 
+    /*
+    Poner fecha y teléfono del usuario
+    */
+
     @Prop({required: true})
     contrasena: string;
 }
