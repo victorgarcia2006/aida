@@ -1,36 +1,35 @@
-
-import { Schema, model, Document } from 'mongoose';
+import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
 // Interfaz para tipar los documentos de contacto en TypeScript
-export interface IEmergencyContact extends Document {
+/* export interface IEmergencyContact extends Document {
   contactName: string;
   contactPhone: string;
   userEmail: string; // Email de la usuaria de la app
-}
+} */
+
+export type EmergencyContactDocument = EmergencyContact & Document;
 
 //Schema con Mongoose
-const EmergencyContactSchema = new Schema<IEmergencyContact>({
-  contactName: {
-    type: String,
-    required: true,
-    trim: true, // Elimina espacios en blanco al inicio y al final, no es importante
-  },
-  contactPhone: {
-    type: String,
+@Schema()
+export class EmergencyContact {
+  @Prop({
     required: true,
     trim: true,
-  },
-  userEmail: {
-    type: String,
+  })
+  contactName: string;
+  
+  @Prop({
     required: true,
     trim: true,
-    lowercase: true, // para que siempre guarde el email en minúsculas
-  },
-}, {
-  timestamps: true, // guarda cuando se creo el contarto y cuando se actualizo
-  versionKey: false, // Evita que se añada el campo __v (version key)
-});
+  })
+  contactPhone: string;
+  
+  @Prop({
+    required: true,
+    trim: true,
+  })
+  userEmail: string;
+}
 
-
-
-export const EmergencyContact = model<IEmergencyContact>('EmergencyContact', EmergencyContactSchema);
+export const EmergencyContactSchema = SchemaFactory.createForClass(EmergencyContact);
